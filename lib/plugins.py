@@ -26,7 +26,7 @@ from collections import namedtuple
 import traceback
 import sys
 import os
-import imp
+import importlib
 import pkgutil
 import time
 import threading
@@ -48,8 +48,7 @@ class Plugins(DaemonThread):
     def __init__(self, config, is_local, gui_name):
         DaemonThread.__init__(self)
         if is_local:
-            find = imp.find_module('plugins')
-            plugins = imp.load_module('electrum_smart_plugins', *find)
+            plugins = importlib.import_module('plugins')
         else:
             plugins = __import__('electrum_smart_plugins')
         self.pkgpath = os.path.dirname(plugins.__file__)
@@ -68,7 +67,7 @@ class Plugins(DaemonThread):
             # do not load deprecated plugins
             if name in ['plot', 'exchange_rate']:
                 continue
-            m = loader.find_module(name).load_module(name)
+            m = importlib.import_module('plugins.' + name)
             d = m.__dict__
             gui_good = self.gui_name in d.get('available_for', [])
             if not gui_good:

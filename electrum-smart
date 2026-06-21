@@ -67,10 +67,21 @@ if not is_android:
 
 # load local module as electrum
 if is_local or is_android:
-    import imp
-    imp.load_module('electrum_smart', *imp.find_module('lib'))
-    imp.load_module('electrum_smart_gui', *imp.find_module('gui'))
-    imp.load_module('electrum_smart_plugins', *imp.find_module('plugins'))
+    import sys, importlib.util
+    sys.path.insert(0, script_dir)
+    
+    def _load_module(name, path):
+        spec = importlib.util.spec_from_file_location(name, os.path.join(script_dir, path))
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            sys.modules[name] = mod
+            spec.loader.exec_module(mod)
+            return mod
+        raise ImportError(f'Cannot load {name} from {path}')
+    
+    _load_module('electrum_smart', 'lib/__init__.py')
+    _load_module('electrum_smart_gui', 'gui/__init__.py')
+    _load_module('electrum_smart_plugins', 'plugins/__init__.py')
 
 
 
