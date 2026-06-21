@@ -1,0 +1,12 @@
+[Unit]
+Description=Electrum-SMART Server 3.0.0
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/electrum-server.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
