@@ -28,10 +28,9 @@ python electrum-smart
 - 100 MB disk space
 - Internet connection
 
-## Servers
-- **Primary:** 151.252.59.32:50001 (TCP) / 50002 (SSL) — CT205
-- **Backup:** 151.252.59.33:50001 (TCP) / 50002 (SSL) — CT206
-- Auto-failover between both servers
+## Servers (auto-failover)
+- 151.252.59.32:50001 (TCP) / 50002 (SSL)
+- 151.252.59.33:50001 (TCP) / 50002 (SSL)
 
 ## Credits
 Original SmartCash Project: https://github.com/SmartCash
