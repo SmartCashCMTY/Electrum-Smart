@@ -1085,8 +1085,7 @@ class Abstract_Wallet(PrintError):
         # fixme: this may happen if history is incomplete
         if balance not in [None, 0]:
             self.print_error("Error: history not synchronized")
-            return []
-
+            # Continue with partial history instead of returning empty
         return h2
 
     def balance_at_timestamp(self, domain, target_timestamp):
