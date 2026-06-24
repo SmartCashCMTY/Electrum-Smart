@@ -1008,6 +1008,7 @@ class Network(util.DaemonThread):
         if b:
             interface.blockchain = b
             self.switch_lagging_interface()
+            self.send_subscriptions()
             self.notify('updated')
             self.notify('interfaces')
             return
@@ -1016,6 +1017,7 @@ class Network(util.DaemonThread):
             interface.blockchain = b
             b.save_header(header)
             self.switch_lagging_interface()
+            self.send_subscriptions()
             self.notify('updated')
             self.notify('interfaces')
             return
